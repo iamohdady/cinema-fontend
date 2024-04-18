@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>CGV Cinemas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary-color: #ffcc00;
+            --dark-bg: #333;
+            --red: #660000;
+            --light-red: #ff3333;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        .navbar {
+            background-color: #660000;
+            color: white;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand:hover {
+            color: #ffcc00;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .navbar a {
+            color: white;
+        }
+
+        .footer a {
+            color: #ff3333;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .show-time p {
+            margin: 0;
+        }
+
+        .room-details {
+            background-image: url('./image cinema/phong.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 40px auto;
+            max-width: 1200px;
+            font-family: 'Arial', sans-serif;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .room-details:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            /* Tăng bóng đổ khi hover */
+        }
+
+        .seat-map {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            max-width: 70%;
+        }
+
+        .seat-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .seat {
+            position: relative;
+            background: linear-gradient(145deg, #4d4d4d, #3b3b3b);
+            width: 50px;
+            height: 50px;
+            margin: 6px;
+            box-shadow: -2px -2px 5px rgba(255, 255, 255, 0.1),
+                2px 2px 5px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .seat::after {
+            content: '';
+            position: absolute;
+            top: 35px;
+            left: 5px;
+            width: 40px;
+            height: 10px;
+            background: linear-gradient(145deg, #4d4d4d, #3b3b3b);
+            border-radius: 5px;
+            box-shadow: -2px -2px 5px rgba(255, 255, 255, 0.1),
+                2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .seat:hover {
+            transform: scale(1.1);
+            box-shadow: -3px -3px 7px rgba(255, 255, 255, 0.2),
+                3px 3px 7px rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+        }
+
+        .selected-seat {
+            background: linear-gradient(145deg, #4caf50, #2e7d32) !important;
+            box-shadow: -3px -3px 7px rgba(255, 255, 255, 0.3),
+                3px 3px 7px rgba(0, 0, 0, 0.6);
+        }
+
+        .booked-seat {
+            background: linear-gradient(145deg, #f44336, #d32f2f) !important;
+            color: #ffffff !important;
+        }
+
+        .screen {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #fff;
+            text-transform: uppercase;
+            padding: 5px;
+            background-color: #444;
+            border-radius: 5px;
+            max-width: 70%;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .standard-row-item {
+            background: linear-gradient(145deg, #607d8b, #455a64);
+        }
+
+        .vip-row-item {
+            background: linear-gradient(145deg, #ffeb3b, #fbc02d);
+        }
+
+        .couple-row-item {
+            background: linear-gradient(145deg, #f8bbd0, #ec407a);
+        }
+
+        .seat-row.standard-row .seat {
+            background: linear-gradient(145deg, #607d8b, #455a64);
+            border-radius: 15px;
+            box-shadow: -3px -3px 7px rgba(255, 255, 255, 0.1),
+                3px 3px 7px rgba(0, 0, 0, 0.6);
+        }
+
+        .seat-row.vip-row .seat {
+            background: linear-gradient(145deg, #ffeb3b, #fbc02d);
+            border-radius: 15px;
+            box-shadow: -3px -3px 7px rgba(255, 255, 255, 0.1),
+                3px 3px 7px rgba(0, 0, 0, 0.6);
+        }
+
+        .seat-row.couple-row .seat {
+            background: linear-gradient(145deg, #f8bbd0, #ec407a);
+            border-radius: 15px;
+            box-shadow: -3px -3px 7px rgba(255, 255, 255, 0.1),
+                3px 3px 7px rgba(0, 0, 0, 0.6);
+        }
+
+
+        .seat.booked-seat {
+            background-color: #d32f2f !important;
+            cursor: not-allowed;
+        }
+
+        .seat.selected-seat {
+            background-color: #4caf50 !important;
+        }
+
+        button[type="button"] {
+            background-color: #660000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="button"]:hover {
+            background-color: #ffcc00;
+            color: black;
+        }
+
+        .footer {
+            margin-top: 3%;
+            padding: 50px 0;
+
+        }
+
+        .footer ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .footer ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer ul li a:hover {
+            color: #ff3333;
+        }
+
+        .footer .fab {
+            font-size: 24px;
+            color: white;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer .fab:hover {
+            color: #ff3333;
+        }
+
+        .footer p {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .seat-legend {
+            background-color: #2c2c2c;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .seat-legend h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .legend-item .color-box {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        .legend-item p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .high {
+            text-transform: uppercase;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+            padding: 15px 20px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .modal-body {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .modal-footer {
+            border-top: none;
+            padding: 10px 20px;
+            text-align: right;
+        }
+
+        .modal-footer .btn {
+            border-radius: 5px;
+            padding: 8px 15px;
+        }
+
+        /* Nút đóng */
+        .close {
+            color: white;
+            font-size: 24px;
+            opacity: 0.9;
+            text-shadow: none;
+        }
+
+        .close:hover {
+            color: #fff;
+            opacity: 1;
+            text-shadow: none;
+        }
+
+        /* Hiệu ứng */
+        .modal.fade .modal-dialog {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        .modal.show .modal-dialog {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Hiệu ứng mờ dần khi modal mở */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Hiệu ứng mờ dần khi modal đóng */
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Áp dụng animation khi modal hiển thị */
+        .modal.fade .modal-dialog {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Áp dụng animation khi modal đóng */
+        .modal.fade.hide .modal-dialog {
+            animation: fadeOut 0.5s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">TUZZCNM</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="home.html">TRANG CHỦ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./nav.html">TIN TỨC & SỰ KIỆN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./detailinfo.html">CÁ NHÂN</a>
+                    </li>
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" href="login.html">ĐĂNG NHẬP</a>
+                    </li>
+                    <li class="nav-item" id="nav-register">
+                        <a class="nav-link" href="register.html">ĐĂNG KÝ</a>
+                    </li>
+                    <li class="nav-item" id="nav-logout">
+                        <a class="nav-link" href="login.html">ĐĂNG XUẤT</a>
+                    </li>
+                    <li class="nav-item" id="nav-welcome">
+                        <span class="nav-link">Xin chào, <span id="username"></span>!</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarNav2">
+                <ul class="navbar-nav mr-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Phim Đang Chiếu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="comming.html">Phim Sắp Chiếu</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div id="messageContainer"></div>
+        <div id="roomList" class="room-list">
+            <div class="room-details">
+                <div class="seat-selection right-panel">
+                    <h2>Danh Sách Ghế</h2>
+                    <div class="seat-selection">
+                        <div class="seat-map">
+                            <div class="seat-row">
+                                <div class="seat">A1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="bookTicket" type="button">Đặt Ghế</button>
+    </div>
+    <div class="container">
+        <!-- Bảng chú thích bên trái -->
+        <div class="left-panel">
+            <div class="seat-legend">
+                <h3>Chú Thích Các Loại Ghế</h3>
+                <div class="legend-item">
+                    <div class="color-box selected-seat"></div>
+                    <p>Ghế Đang Chọn</p>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box booked-seat"></div>
+                    <p>Ghế Đã Được Đặt</p>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box standard-row-item"></div>
+                    <p>Ghế Thường</p>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box vip-row-item"></div>
+                    <p>Ghế VIP</p>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box couple-row-item"></div>
+                    <p>Ghế Cặp</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="bookModalLabel" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookModalLabel">Thông báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-4">Liên Kết Nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Trang Chủ</a></li>
+                        <li><a href="#">Phim Đang Chiếu</a></li>
+                        <li><a href="#">Phim Sắp Chiếu</a></li>
+                        <li><a href="#">Tìm Rạp & Phim</a></li>
+                        <li><a href="#">Khuyến Mãi & Sự Kiện</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-4">Theo Dõi Chúng Tôi</h5>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-youtube"></i></a></li>
+                    </ul>
+                    <p class="mt-3">© 2024 Tunz Cinemas. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap JS (bao gồm Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = localStorage.getItem('token');
+            const username = localStorage.getItem('username');
+            if (token && username) {
+                document.getElementById('nav-login').style.display = 'none';
+                document.getElementById('nav-register').style.display = 'none';
+
+                document.getElementById('nav-welcome').style.display = 'block';
+                document.getElementById('username').textContent = username;
+            }
+            var selectedSeats = [];
+            var selectedShowtimeId = getUrlParameter('showtimeId');
+            console.log("showtime lấy", selectedShowtimeId);
+
+            // Gọi API để lấy thông tin chi tiết lịch chiếu và phòng
+            axios.get(`http://localhost:5050/showtimes/details/${selectedShowtimeId}`)
+                .then(function (response) {
+                    var scheduleRoomData = response.data;
+                    displayScheduleAndRoomDetails(scheduleRoomData);
+                    console.log("Schedule and Room Details: ", scheduleRoomData);
+                    console.log("showtime", selectedShowtimeId);
+                    getSeatList(scheduleRoomData.room.id);
+                    displayRooms([scheduleRoomData.room]);
+                })
+                .catch(function (error) {
+                    console.error('Error fetching schedule and room details:', error);
+                });
+
+            // Hàm hiển thị thông tin lịch chiếu và phòng
+            function displayScheduleAndRoomDetails(data) {
+                var scheduleElement = document.getElementById('scheduleDetails');
+                var roomElement = document.getElementById('roomDetails');
+
+                if (scheduleElement && roomElement) {
+                    scheduleElement.textContent = `Schedule: ${data.schedule.day_time.day_time} ${data.schedule.startTime}`;
+                    roomElement.textContent = `Room: ${data.room.name}`;
+                }
+            }
+            // Hàm hiển thị thông tin phòng
+            function displayRooms(rooms) {
+                const roomList = document.getElementById('roomList');
+                roomList.innerHTML = '';
+
+                rooms.forEach((room) => {
+                    const roomItem = document.createElement('div');
+                    roomItem.classList.add('room-item');
+                    roomItem.innerHTML = `
+                <div class="room-details">
+                    <h3>${room.name}</h3>
+                    <p><strong class="high">Số chỗ ngồi:</strong> ${room.capacity}</p>
+                    <div class="screen">Màn hình</div>
+                    <div id="seatList_${selectedShowtimeId}" class="seat-selection"></div> <!-- Sửa đổi tại đây -->  
+                        
+                </div>
+            `;
+                    roomList.appendChild(roomItem);
+                    getSeatList(selectedShowtimeId); // Gọi hàm getSeatList với selectedShowtimeId
+                });
+            }
+
+            // Gọi API để lấy thông tin lịch chiếu của một phim cụ thể
+            var seatsContainer = document.querySelector('.seat-map');
+            seatsContainer.innerHTML = '';
+
+            function getSeatList(selectedShowtimeId) {
+                var selectedShowtimeId = getUrlParameter('showtimeId');
+
+                axios.get(`http://localhost:5050/seats/showtime/${selectedShowtimeId}`)
+                    .then((response) => {
+                        const seats = response.data;
+                        console.log("showtime", selectedShowtimeId);
+                        displaySeatList(selectedShowtimeId, seats);
+                    })
+                    .catch((error) => {
+                        console.error(`Có lỗi khi lấy danh sách ghế của showtime ${selectedShowtimeId}:`, error);
+                    });
+            }
+
+            function displaySeatList(roomId, seats) {
+                const seatListContainer = document.getElementById(`seatList_${roomId}`);
+                if (seatListContainer) {
+                    seatListContainer.innerHTML = '';
+                    const seatList = document.createElement('div');
+                    seatList.classList.add('seat-map');
+                    let seatRow = null;
+                    let seatCount = 0;
+                    seats.forEach((seat, index) => {
+                        if (seatCount % 10 === 0) {
+                            seatRow = document.createElement('div');
+                            seatRow.classList.add('seat-row');
+
+                            if (seatCount / 10 < 2) {
+                                seatRow.classList.add('standard-row');
+                            } else if (seatCount / 10 < 4) {
+                                seatRow.classList.add('vip-row');
+                            } else {
+                                seatRow.classList.add('couple-row');
+                            }
+                            seatList.appendChild(seatRow);
+                        }
+                        const seatElement = document.createElement('div');
+                        seatElement.classList.add('seat');
+                        seatElement.textContent = seat.name;
+                        seatElement.dataset.seatId = seat.id;
+                        if (seat.booked) {
+                            seatElement.classList.add('booked-seat');
+                            seatElement.title = 'Ghế đã được đặt';
+                        } else {
+                            // Thêm sự kiện click cho ghế chưa đặt
+                            seatElement.addEventListener('click', function () {
+                                handleSeatClick(seatElement, seat.id);
+                            });
+                        }
+
+                        seatRow.appendChild(seatElement);
+                        seatCount++;
+                    });
+
+                    seatListContainer.appendChild(seatList);
+                }
+            }
+            function handleSeatClick(seatElement, seatId) {
+                if (seatElement.classList.contains('selected-seat')) {
+                    seatElement.classList.remove('selected-seat');
+                    selectedSeats = selectedSeats.filter(id => id !== seatId);
+                } else {
+                    seatElement.classList.add('selected-seat');
+                    selectedSeats.push(seatId);
+                }
+            }
+            var bookTicketButton = document.getElementById('bookTicket');
+            bookTicketButton.addEventListener('click', function () {
+                var selectedShowtimeId = getUrlParameter('showtimeId');
+                if (selectedSeats.length === 0 || selectedShowtimeId === null) {
+                    showModal("Thông báo", "Vui lòng chọn ghế và lịch chiếu trước khi đặt vé.");
+                } else {
+                    var requestDataArray = [];
+                    selectedSeats.forEach(function (seatId) {
+                        var requestData = {
+                            seatId: seatId,
+                            showtimeId: selectedShowtimeId
+                        };
+                        requestDataArray.push(requestData);
+                    });
+
+                    if (token) {
+                        axios.post('http://localhost:5050/tickets/book', requestDataArray, {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        })
+                            .then(function (response) {
+                                var firstTicket = response.data[0];
+                                var billId = firstTicket.bill_id.id;
+                                var roomId = firstTicket.seat_booking_id.showtime_id.room.id;
+                                var seats = response.data.map(ticket => ticket.seat_booking_id.seat_id.name).join(', ');
+                                window.location.href = `bill.html?billId=${billId}`;
+                                showModal("Thành công", `Đặt vé thành công cho các ghế: ${seats}.`);
+                            })
+                            .catch(function (error) {
+                                console.error('Error booking tickets:', error);
+                                showModal("Lỗi", "Đã xảy ra lỗi khi đặt vé.");
+                            });
+                    }
+                }
+            });
+
+            function getUrlParameter(name) {
+                name = name.replace(/[\[\]]/g, '\\$&');
+                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(window.location.href);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            }
+
+            function showModal(title, message) {
+                // Cập nhật tiêu đề và nội dung của modal
+                document.getElementById('bookModalLabel').querySelector('.modal-title').textContent = title;
+                document.getElementById('modalMessage').textContent = message;
+
+                // Sử dụng jQuery để hiển thị modal
+                $('#bookModalLabel').modal('show');
+            }
+            function closeModal() {
+                document.getElementById('bookModalLabel').style.display = 'none';
+            }
+
+        });
+    </script>
+</body>
+
+</html>

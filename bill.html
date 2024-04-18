@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>CGV Cinemas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        .navbar {
+            background-color: #660000;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand:hover {
+            color: #ffcc00;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .movie-title {
+            color: #ffcc00;
+        }
+
+        .footer a {
+            color: #ff3333;
+        }
+
+        .ticket-container {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .navbar {
+            background-color: #660000;
+        }
+
+        .navbar a {
+            color: white;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand:hover {
+            color: #ffcc00;
+        }
+
+        .ticket-detail {
+            padding: 20px;
+            background-color: #1f1f1f;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            max-width: 950px;
+            margin: 30px auto;
+        }
+
+        .ticket-detail h2 {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 300;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .ticket {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background-color: #292929;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .ticket-info-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .member-info,
+        .ticket-info {
+            background-color: #444;
+            padding: 15px;
+            width: 250px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .member-info h4,
+        .ticket-info h4 {
+            color: #ffcc00;
+            font-size: 18px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+        }
+
+        .member-info p,
+        .ticket-info p {
+            font-size: 14px;
+            margin: 5px 0;
+            color: #ddd;
+        }
+
+        .ticket-img {
+            max-width: 180px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .ticket-section {
+            flex: 1;
+            margin: 0 15px;
+        }
+
+        .ticket-section h4 {
+            color: #ffcc00;
+            font-size: 18px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+        }
+
+        .ticket-section p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .total-amount-container {
+            background: linear-gradient(135deg, #00bcd4, #8bc34a);
+            border-radius: 15px;
+            padding: 10px 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: fit-content;
+            margin: 20px auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: scale(1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .total-amount-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .total-amount {
+            font-size: 2rem;
+            font-weight: 200;
+            color: white;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .button-container button {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 180px;
+            text-align: center;
+            position: relative;
+        }
+
+        .print-ticket {
+            background: linear-gradient(45deg, #4caf50, #388e3c);
+        }
+
+        .pay-ticket {
+            background: linear-gradient(45deg, #ff5722, #ff9800);
+            animation: bounce 1s infinite;
+        }
+
+        .cancel-ticket {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+        }
+
+        .button-container button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-container button:active {
+            transform: translateY(2px);
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .print-ticket[style="display: none;"] {
+            display: none;
+        }
+
+
+        @media (max-width: 768px) {
+            .ticket {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .ticket-section {
+                margin: 10px 0;
+            }
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 40px 0;
+            font-family: Arial, sans-serif;
+            margin-top: 20px;
+        }
+
+        .footer-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff3333;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff3333;
+        }
+
+        .footer-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+            line-height: 40px;
+            font-size: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #ff3300;
+            /* Màu nền khi hover */
+            color: #fff;
+            /* Màu icon khi hover */
+        }
+
+        /* Màu sắc riêng cho từng biểu tượng */
+        .fab.fa-facebook-square {
+            color: #3b5998;
+        }
+
+        .fab.fa-twitter-square {
+            color: #1da1f2;
+        }
+
+        .fab.fa-instagram-square {
+            color: #e1306c;
+        }
+
+        .fab.fa-youtube-square {
+            color: #ff0000;
+        }
+
+        @media (max-width: 768px) {
+            .footer .row {
+                text-align: center;
+            }
+
+            .footer .col-lg-3 {
+                margin-bottom: 20px;
+            }
+        }
+
+        #paymentMessage {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            background-color: #4CAF50;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+            padding: 15px 20px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .modal-body {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .modal-footer {
+            border-top: none;
+            padding: 10px 20px;
+            text-align: right;
+        }
+
+        .modal-footer .btn {
+            border-radius: 5px;
+            padding: 8px 15px;
+        }
+
+        /* Nút đóng */
+        .close {
+            color: white;
+            font-size: 24px;
+            opacity: 0.9;
+            text-shadow: none;
+        }
+
+        .close:hover {
+            color: #fff;
+            opacity: 1;
+            text-shadow: none;
+        }
+
+        /* Hiệu ứng */
+        .modal.fade .modal-dialog {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        .modal.show .modal-dialog {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">TUZZCNM</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="home.html">TRANG CHỦ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./nav.html">TIN TỨC & SỰ KIỆN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./detailinfo.html">CÁ NHÂN</a>
+                    </li>
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" href="login.html">ĐĂNG NHẬP</a>
+                    </li>
+                    <li class="nav-item" id="nav-register">
+                        <a class="nav-link" href="register.html">ĐĂNG KÝ</a>
+                    </li>
+                    <li class="nav-item" id="nav-logout">
+                        <a class="nav-link" href="login.html">ĐĂNG XUẤT</a>
+                    </li>
+                    <li class="nav-item" id="nav-welcome">
+                        <span class="nav-link">Xin chào, <span id="username"></span>!</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarNav2">
+                <ul class="navbar-nav mr-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Phim Đang Chiếu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="comming.html">Phim Sắp Chiếu</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="ticket-detail">
+        <h2 class="owner-ticket">Hóa Đơn</h2>
+        <div class="ticket" id="billDetail">
+            <div id="paymentMessage" style="display: none;"></div>
+            <img class="ticket-img" src="./image cinema/spiderman.jpg" alt="Movie Poster">
+            <div class="ticket-info-container" id="ticketInfoContainer">
+                <div class="member-info" id="memberInfo"></div>
+                <div class="ticket-info" id="ticketInfo"></div>
+            </div>
+        </div>
+        <div class="total-amount-container" id="totalAmountContainer">
+            <h4 id="totalAmount" class="total-amount"></h4>
+        </div>
+        <div class="button-container">
+            <button type="button" class="print-ticket" style="display: none;">
+                <i class="fa fa-print"></i> In vé
+            </button>
+            <button type="button" class="pay-ticket">
+                <i class="fa fa-credit-card"></i> Thanh Toán
+            </button>
+            <button type="button" class="cancel-ticket" id="cancelTicketButton">
+                <i class="fa fa-times"></i> Hủy
+            </button>
+        </div>
+    </div>
+    <div class="modal fade" id="billModal" tabindex="-1" aria-labelledby="billModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="billModalLabel">Thông báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Column 1: About -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Về Chúng Tôi</h5>
+                    <p class="footer-text">Rạp chiếu phim với công nghệ hiện đại. Trải nghiệm trải nghiệm xem phim tuyệt
+                        vời nhất tại Việt Nam!</p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Liên Kết Nhanh</h5>
+                    <ul class="footer-links">
+                        <li><a href="home.html">Trang Chủ</a></li>
+                        <li><a href="./about.html">Về Chúng Tôi</a></li>
+                        <li><a href="./contact.html">Liên Hệ</a></li>
+                        <li><a href="./terms.html">Điều Khoản</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Follow Us -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Kết Nối</h5>
+                    <div class="social-icons">
+                        <a href="#" class="fab fa-facebook-square" target="_blank"></a>
+                        <a href="#" class="fab fa-twitter-square" target="_blank"></a>
+                        <a href="#" class="fab fa-instagram-square" target="_blank"></a>
+                        <a href="#" class="fab fa-youtube-square" target="_blank"></a>
+                    </div>
+                </div>
+
+                <!-- Column 4: Contact -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Liên Hệ</h5>
+                    <p class="footer-text">Địa chỉ: Số 3, Cầu Giấy, Hà Nội, Việt Nam</p>
+                    <p class="footer-text">Điện thoại: 0845658816</p>
+                    <p class="footer-text">Email: lilltuzz1509@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container text-center mt-4">
+            <p class="footer-text">© 2025 CGV Cinemas. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = localStorage.getItem('token');
+            const username = localStorage.getItem('username');
+
+            if (token && username) {
+                document.getElementById('nav-login').style.display = 'none';
+                document.getElementById('nav-register').style.display = 'none';
+
+                document.getElementById('nav-welcome').style.display = 'block';
+                document.getElementById('username').textContent = username;
+            }
+
+            if (token) {
+                function fetchBillDetail() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const billId = urlParams.get('billId');
+                    console.log('Bill ID:', billId);
+
+                    if (!billId) {
+                        console.error('Bill ID is missing in the URL');
+                        return;
+                    }
+
+                    axios.get(`http://localhost:5050/bill/detail/${billId}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                        .then(response => {
+                            const data = response.data;
+                            const tickets = data.tickets;
+
+                            const priceMap = {
+                                'A': 0,
+                                'B': 0,
+                                'C': 5000,
+                                'D': 5000,
+                                'E': 10000,
+                                'F': 10000
+                            };
+
+                            let totalPrice = 0;
+                            tickets.forEach(ticket => {
+                                const seatName = ticket.seat_booking_id.seat_id.name;
+                                const seatRow = seatName.charAt(0); // Lấy chữ cái đầu tiên của tên ghế (A, B, C, D, E, F)
+                                totalPrice += priceMap[seatRow]; // Cộng thêm giá của ghế tương ứng
+                            });
+                            const finalAmount = data.total_amount + totalPrice;
+
+                            // Hiển thị thông tin người dùng
+                            const memberInfoContainer = document.getElementById('memberInfo');
+                            const member = data.member_id;
+                            memberInfoContainer.innerHTML = `
+                    <h4>Thông tin người dùng</h4>
+                    <p>Username: ${member.username}</p>
+                    <p>Email: ${member.email}</p>
+                    <p>Tài khoản: ${member.money}</p>
+                    <p>Tổng giá: ${finalAmount}</p>
+                `;
+
+                            // Hiển thị thông tin vé
+                            const ticketInfoContainer = document.getElementById('ticketInfo');
+                            const firstTicket = tickets[0];
+                            const movieName = firstTicket.seat_booking_id.showtime_id.movie.name;
+                            const startTime = firstTicket.seat_booking_id.showtime_id.schedule.startTime;
+                            const roomName = firstTicket.seat_booking_id.showtime_id.room.name;
+                            const duration = firstTicket.seat_booking_id.showtime_id.movie.duration;
+
+                            ticketInfoContainer.innerHTML = `
+                    <h4>Thông tin vé</h4>
+                    <p>Phim: ${movieName}</p>
+                    <p>Thời gian bắt đầu: ${startTime}</p>
+                    <p>Phòng: ${roomName}</p>
+                    <p>Thời Lượng: ${duration} minutes</p>
+                    <p>Số Ghế: ${tickets.map(ticket => ticket.seat_booking_id.seat_id.name).join(', ')}</p>
+                `;
+                            const paymentTimeString = new Date(data.paymentTime);
+                            const day = String(paymentTimeString.getDate()).padStart(2, '0');
+                            const month = String(paymentTimeString.getMonth() + 1).padStart(2, '0'); // Tháng tính từ 0
+                            const year = paymentTimeString.getFullYear();
+
+                            const formattedPaymentTime = `${day}-${month}-${year}`;
+                            // Hiển thị thời gian thanh toán và tổng số tiền
+                            const paymentTime = document.createElement('p');
+                            paymentTime.textContent = `Payment Time: ${formattedPaymentTime}`;
+                            ticketInfoContainer.appendChild(paymentTime);
+
+                            const totalAmountContainer = document.getElementById('totalAmountContainer');
+                            const totalAmount = document.getElementById('totalAmount');
+                            totalAmount.textContent = `Total Amount: ${finalAmount}`; // Cập nhật tổng giá vé
+                            totalAmountContainer.appendChild(totalAmount);
+
+                            // Thay đổi ảnh phim
+                            const moviePoster = document.querySelector('.ticket-img');
+                            moviePoster.src = `./image cinema/${firstTicket.seat_booking_id.showtime_id.movie.image}`;
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+
+                fetchBillDetail();
+            } else {
+                console.error('Token is missing');
+            }
+
+            const payButton = document.querySelector('.pay-ticket');
+            const paymentMessage = document.getElementById('paymentMessage');
+
+            payButton.addEventListener('click', function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const billId = urlParams.get('billId');
+
+                if (billId) {
+                    axios.post(`http://localhost:5050/member/pay/${billId}`)
+                        .then(response => {
+                            const message = response.data.message || 'Thanh toán thành công';
+                            showModal('Thông báo', message);
+                            payButton.style.display = 'none';
+
+                            document.querySelectorAll('.print-ticket').forEach(button => {
+                                button.style.display = 'block';
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showModal('Lỗi', 'Tài khoản không đủ số dư.');
+                            setTimeout(() => {
+                                window.location.href = 'payment.html';
+                            }, 2000);
+                        });
+                } else {
+                    console.error('Bill ID is missing in the URL');
+                }
+            });
+
+
+            function displayPaymentMessage(message) {
+                paymentMessage.textContent = message;
+                paymentMessage.style.display = 'block';
+            }
+
+            const printButtons = document.querySelectorAll('.print-ticket');
+            printButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const billId = urlParams.get('billId');
+                    if (billId) {
+                        window.location.href = `ticket.html?billId=${billId}`;
+                    } else {
+                        console.error('Bill ID is missing in the URL');
+                    }
+                });
+            });
+
+            const cancelButton = document.getElementById('cancelTicketButton');
+            cancelButton.addEventListener('click', function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const billId = urlParams.get('billId');
+
+                if (billId) {
+                    axios.post(`http://localhost:5050/bill/cancel/${billId}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                        .then(response => {
+                            const message = response.data.message || 'Hủy hóa đơn thành công';
+                            showModal('Thông báo', message);
+
+                            document.querySelector('.pay-ticket').style.display = 'none';
+                            document.querySelectorAll('.print-ticket').forEach(button => {
+                                button.style.display = 'none';
+                            });
+
+                            setTimeout(() => {
+                                window.location.href = `home.html`;
+                            }, 2000);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showModal('Lỗi', 'Hủy hóa đơn thất bại.');
+                        });
+                } else {
+                    console.error('Bill ID is missing in the URL');
+                }
+            });
+
+        });
+
+        function showModal(title, message) {
+            // Cập nhật nội dung modal
+            document.getElementById('billModalLabel').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+
+            // Hiển thị modal
+            $('#billModal').modal('show');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tunz Cinemas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        .navbar {
+            background-color: #660000;
+            color: white;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand:hover {
+            color: #ffcc00;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .navbar a {
+            color: white;
+        }
+
+        .movie-title {
+            color: #ffcc00;
+        }
+
+        .footer a {
+            color: #ff3333;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 30px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+
+        .movie-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .movie-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            opacity: 1;
+        }
+
+        .movie-card:hover .movie-info {
+            opacity: 1;
+        }
+
+        .movie-info h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .movie-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .movie-info a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            border: 2px solid white;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .movie-info a:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .movie-info .other-button {
+            float: right;
+            margin-left: 50px;
+        }
+
+        .input-group-append .btn:hover,
+        .input-group-append .btn:focus {
+            background-color: #660000;
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .input-group {
+            margin-left: 144px;
+        }
+
+        .col-md-12 h2 {
+            margin-bottom: 40px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            color: white;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+        .pagination a.active {
+            background-color: #660000;
+            color: white;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .pagination .pages-container {
+            display: flex;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 40px 0;
+            font-family: Arial, sans-serif;
+            margin-top: 15%;
+        }
+
+        .footer-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff3333;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff3333;
+        }
+
+        .footer-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+            line-height: 40px;
+            font-size: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #ff3300;
+            /* Màu nền khi hover */
+            color: #fff;
+            /* Màu icon khi hover */
+        }
+
+        /* Màu sắc riêng cho từng biểu tượng */
+        .fab.fa-facebook-square {
+            color: #3b5998;
+        }
+
+        .fab.fa-twitter-square {
+            color: #1da1f2;
+        }
+
+        .fab.fa-instagram-square {
+            color: #e1306c;
+        }
+
+        .fab.fa-youtube-square {
+            color: #ff0000;
+        }
+
+        @media (max-width: 768px) {
+            .footer .row {
+                text-align: center;
+            }
+
+            .footer .col-lg-3 {
+                margin-bottom: 20px;
+            }
+        }
+
+        .payment-detail {
+            background-color: #444;
+            margin-top: 3%;
+            margin-bottom: 5%;
+            border-radius: 3%;
+        }
+
+        .container-card {
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            /* Cần để định vị phần tử con bên trong */
+        }
+
+        h2 {
+            text-align: center;
+            color: #660000;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #660000;
+            border: none;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffcc00;
+            color: #000;
+        }
+
+        .price-option {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .price-option input[type="radio"] {
+            display: none;
+        }
+
+        .price-option label {
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            flex-grow: 1;
+            text-align: center;
+            transition: all 0.3s;
+            color: #660000;
+        }
+
+        .price-option label:hover {
+            background-color: #660000;
+            color: #fff;
+            border-color: #660000;
+        }
+
+        .price-option input[type="radio"]:checked+label {
+            background-color: #660000;
+            color: #fff;
+            border-color: #660000;
+        }
+
+        .card-logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            padding: 5px;
+            background-color: #660000;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .card-number,
+        .card-validity,
+        .card-holder {
+            color: white;
+            padding: 5px;
+        }
+
+        .card-front {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background-color: #1a1a1a;
+        }
+
+        .atm-card:hover .card-front {
+            transform: rotateY(-180deg);
+        }
+
+        .atm-card:hover .card-back {
+            transform: rotateY(0deg);
+        }
+
+        .container-card {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-container {
+            width: 45%;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background-color: #1a1a1a;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            right: 0;
+            top: 0;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-back .card-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .card-back .card-cvv {
+            color: white;
+            padding: 5px;
+        }
+
+        .card-back .card-back-info {
+            color: white;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .atm-card {
+            width: 40%;
+            height: 200px;
+            perspective: 1000px;
+            position: relative;
+            transition: transform 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .atm-card:hover {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s;
+        }
+
+        #message {
+            display: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            transition: opacity 0.3s;
+        }
+
+        #message.show {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Modal Style */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Màu nền mờ khi mở modal */
+        }
+
+        .modal-dialog {
+            max-width: 500px;
+            margin: 30px auto;
+            animation: fadeIn 0.5s ease-out;
+            /* Thêm animation cho việc hiển thị */
+        }
+
+        .modal-content {
+            border-radius: 10px;
+            overflow: hidden;
+            border: none;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            background: linear-gradient(90deg, #c0392b, #8e44ad);
+            color: #fff;
+            padding: 15px;
+            font-size: 1.25rem;
+            text-align: center;
+        }
+
+        .modal-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .modal-body p {
+            color: #1a1a1a;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #ddd;
+            text-align: right;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cải tiến ảnh QR */
+        #qrCodeImage {
+            max-width: 70%;
+            /* Đảm bảo ảnh không vượt quá kích thước modal */
+            height: auto;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        /* Số tiền */
+        #amountText {
+            font-size: 20px;
+            font-weight: bold;
+            color: #660000;
+            margin-top: 10px;
+        }
+
+        /* Hiển thị modal khi cần thiết */
+        .show-modal {
+            display: block;
+        }
+
+        .back-button {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: #28a745;
+            color: white;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:hover {
+            background-color: #218838;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">TUZZCNM</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">TRANG CHỦ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./nav.html">TIN TỨC & SỰ KIỆN</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="./detailinfo.html">CÁ NHÂN</a>
+                    </li>
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" href="login.html">ĐĂNG NHẬP</a>
+                    </li>
+                    <li class="nav-item" id="nav-register">
+                        <a class="nav-link" href="register.html">ĐĂNG KÝ</a>
+                    </li>
+                    <li class="nav-item" id="nav-logout">
+                        <a class="nav-link" href="login.html">ĐĂNG XUẤT</a>
+                    </li>
+                    <li class="nav-item" id="nav-welcome">
+                        <span class="nav-link">Xin chào, <span id="username"></span>!</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Tạo một phần nội dung chính với các ảnh phim và thông tin -->
+    <div class="container">
+        <div id="message" style="display: none;" class="alert alert-info" role="alert">
+            Chờ xác nhận thanh toán nạp thẻ...
+        </div>
+
+        <div class="container-card payment-detail">
+            <div class="atm-card">
+                <div class="card-front">
+                    <div class="card-logo">CARD</div>
+                    <div class="card-number">1234 5678 9012 3456</div>
+                    <div class="card-validity">Số nạp tiền: 500000 VND</div>
+                    <div class="card-holder">Người sở hữu: John Doe</div>
+                </div>
+                <div class="card-back">
+                    <div class="card-inner">
+                        <div class="card-cvv">CVV: 123</div>
+                        <div class="card-back-info">Gọi ngay 1900 1234 để hủy bỏ giao dịch</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-container">
+                <h2>Nạp tiền vào tài khoản</h2>
+                <form id="paymentForm" onsubmit="event.preventDefault(); handleDeposit()">
+                    <div class="form-group">
+                        <label for="price">Chọn mức giá:</label>
+                        <div class="price-option">
+                            <input type="radio" id="price50000" name="price" value="50000"
+                                onchange="updateAmount(this)">
+                            <label for="price50000">50,000 VNĐ</label>
+                            <input type="radio" id="price100000" name="price" value="100000"
+                                onchange="updateAmount(this)">
+                            <label for="price100000">100,000 VNĐ</label>
+                            <input type="radio" id="price200000" name="price" value="200000"
+                                onchange="updateAmount(this)">
+                            <label for="price200000">200,000 VNĐ</label>
+                            <input type="radio" id="price500000" name="price" value="500000"
+                                onchange="updateAmount(this)">
+                            <label for="price500000">500,000 VNĐ</label>
+                            <input type="radio" id="price1000000" name="price" value="1000000"
+                                onchange="updateAmount(this)">
+                            <label for="price1000000">1,000,000 VNĐ</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Nạp tiền</button>
+                </form>
+                <a href="javascript:history.back()" class="back-button">&#8592;</a>
+            </div>
+        </div>
+    </div>
+    <!-- Popup Modal -->
+    <div id="depositModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nạp Tiền</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Vui lòng quét mã QR để nạp tiền:</p>
+                    <!-- Thêm ảnh QR -->
+                    <img id="qrCodeImage" src="./image cinema/qr" alt="QR Code" style="max-width: 70%; height: auto;" />
+                    <p>Số tiền: <span id="amountText"></span> VNĐ</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Xác nhập nạp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Column 1: About -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Về Chúng Tôi</h5>
+                    <p class="footer-text">Rạp chiếu phim với công nghệ hiện đại. Trải nghiệm trải nghiệm xem phim tuyệt
+                        vời nhất tại Việt Nam!</p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Liên Kết Nhanh</h5>
+                    <ul class="footer-links">
+                        <li><a href="home.html">Trang Chủ</a></li>
+                        <li><a href="./about.html">Về Chúng Tôi</a></li>
+                        <li><a href="./contact.html">Liên Hệ</a></li>
+                        <li><a href="./terms.html">Điều Khoản</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Follow Us -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Kết Nối</h5>
+                    <div class="social-icons">
+                        <a href="#" class="fab fa-facebook-square" target="_blank"></a>
+                        <a href="#" class="fab fa-twitter-square" target="_blank"></a>
+                        <a href="#" class="fab fa-instagram-square" target="_blank"></a>
+                        <a href="#" class="fab fa-youtube-square" target="_blank"></a>
+                    </div>
+                </div>
+
+                <!-- Column 4: Contact -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Liên Hệ</h5>
+                    <p class="footer-text">Địa chỉ: Số 3, Cầu Giấy, Hà Nội, Việt Nam</p>
+                    <p class="footer-text">Điện thoại: 0845658816</p>
+                    <p class="footer-text">Email: lilltuzz1509@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container text-center mt-4">
+            <p class="footer-text">© 2025 CGV Cinemas. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    <!-- Thêm các thư viện JavaScript cần thiết cho Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+</body>
+
+<script>
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
+
+    if (token && username) {
+        document.getElementById('nav-login').style.display = 'none';
+        document.getElementById('nav-register').style.display = 'none';
+        document.getElementById('nav-welcome').style.display = 'block';
+        document.getElementById('username').textContent = username;
+    }
+
+    console.log('Token:', token);
+
+    async function handleDeposit() {
+        const selectedPrice = document.querySelector('input[name="price"]:checked');
+        if (selectedPrice) {
+            const amount = parseInt(selectedPrice.value);
+            const token = localStorage.getItem('token'); // Lấy token từ localStorage
+            console.log('Token:', token);
+            const username = localStorage.getItem('username'); // Lấy username từ localStorage
+            console.log('username:', username);
+
+            if (token && username) {
+                // Ẩn các mục "Đăng nhập" và "Đăng ký"
+                document.getElementById('nav-login').style.display = 'none';
+                document.getElementById('nav-register').style.display = 'none';
+                // Hiển thị câu chào mừng người dùng
+                document.getElementById('nav-welcome').style.display = 'block';
+                document.getElementById('username').textContent = username;
+            }
+
+            if (!token) {
+                console.error('Token not found!');
+                return;
+            }
+            console.log('Token:', token);
+            console.log('Amount selected:', amount);
+
+            document.getElementById('message').style.display = 'block';
+            try {
+                const response = await axios.post('http://localhost:5050/member/deposit', { amount: amount }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                console.log(response.data);
+            } catch (error) {
+                console.error('Failed to deposit money:', amount);
+            }
+
+            // Hiển thị modal với giá tiền và QR code
+            showDepositModal(amount);
+        } else {
+            console.error('Please select a price before depositing money.');
+        }
+    }
+
+    // Hàm hiển thị modal với giá tiền và mã QR
+    function showDepositModal(amount) {
+        // Cập nhật số tiền hiển thị trong modal
+        document.getElementById('amountText').textContent = amount;
+
+        // Cập nhật mã QR (Giả sử bạn có các mã QR khác nhau cho từng mức giá)
+        const qrImage = document.getElementById('qrCodeImage');
+        qrImage.src = `./image cinema/qr.jpg`; // Điều chỉnh đường dẫn ảnh QR tương ứng với mức giá
+
+        // Hiển thị modal
+        $('#depositModal').modal('show');
+    }
+
+    async function displayUserProfile() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('Token not found!');
+            return;
+        }
+        try {
+            const response = await axios.get('http://localhost:5050/member/profile', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (response.data) {
+                const userData = response.data;
+                document.querySelector('.card-number').innerText = `Số tiền: ${userData.money} VND`;
+                document.querySelector('.card-holder').innerText = `Người sở hữu: ${userData.username}`;
+            } else {
+                console.error('Failed to get user profile data:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Failed to get user profile data:', error);
+        }
+    }
+
+    // Sử dụng trong sự kiện click vào số tiền
+    document.querySelectorAll('.user-item').forEach(function (userItem) {
+        var userAmount = userItem.querySelector('.user-amount');
+        if (userAmount) {
+            userAmount.addEventListener('click', function () {
+                var amount = parseFloat(userAmount.textContent.replace(/[^\d.-]/g, '')); // Lấy số tiền từ nội dung
+                showDepositModal(amount); // Hiển thị modal với số tiền đã chọn
+            });
+        }
+    });
+
+    function updateAmount(selectedPrice) {
+        const amountDisplay = document.querySelector('.card-validity');
+        amountDisplay.innerText = 'Số nạp tiền: ' + selectedPrice.value + ' VNĐ';
+    }
+
+    displayUserProfile();
+
+</script>
+
+
+</html>

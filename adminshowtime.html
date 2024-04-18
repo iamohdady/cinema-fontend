@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page - Quản lý người dùng</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ffcc00;
+            --dark-bg: #333;
+            --red: #660000;
+            --light-red: #ff3333;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand:hover {
+            color: #ffcc00;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .navbar {
+            background-color: var(--dark-bg);
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .vertical-navbar {
+            background-color: #2c3e50;
+            width: 265px;
+            float: left;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+            padding-top: 60px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .vertical-navbar .navbar-nav {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .vertical-navbar .nav-link {
+            padding: 25px 15px;
+            width: 100%;
+            color: white;
+            font-size: 16px;
+            display: flex;
+            margin-top: 10px;
+            align-items: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .vertical-navbar .nav-link:hover {
+            background-color: #34495e;
+            color: #ecf0f1;
+            transform: translateX(10px);
+        }
+
+        .vertical-navbar .nav-link i {
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .vertical-navbar .menu-toggle {
+            display: none;
+            font-size: 30px;
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .vertical-navbar {
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: -250px;
+                transition: left 0.3s ease;
+            }
+
+            .vertical-navbar.active {
+                left: 0;
+            }
+
+            .vertical-navbar .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 15px;
+                left: 15px;
+            }
+
+            .vertical-navbar .navbar-nav {
+                display: block;
+                padding: 0;
+            }
+
+            .vertical-navbar .nav-link {
+                width: 100%;
+                padding: 15px 10px;
+            }
+        }
+
+        h1 {
+            font-size: 26px;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .daytime-detail {
+            padding: 30px 15px;
+            background: linear-gradient(to right, #34495e, #7f8c8d);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 80px;
+            margin-bottom: 5%;
+        }
+
+        .flex-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .showing-item {
+            list-style: none;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: var(--dark-bg);
+            border-radius: 5px;
+        }
+
+        .showing-item h3 {
+            color: #ccc;
+            margin-top: 0;
+            text-transform: uppercase;
+            font-weight: 300;
+            font-size: 24px;
+        }
+
+        .showtime-list {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+        }
+
+        .showtime-list li {
+            margin-right: 10px;
+        }
+
+        .showtime {
+            display: inline-block;
+            background-color: var(--red);
+            color: white;
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .day-info {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 20px;
+            padding: 16px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: var(--primary-color);
+            margin-right: 15px;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        .action-buttons {
+            flex: 0 0 20%;
+            text-align: right;
+        }
+
+        .action-buttons button {
+            margin-right: 5px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .vertical-navbar {
+                width: 100%;
+                max-width: none;
+                float: none;
+            }
+
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+        }
+
+        .alert-success {
+            margin-top: 2%;
+            width: 100%;
+        }
+
+        #addShowtimeBtn {
+            margin-bottom: 20px;
+            display: block;
+            background: linear-gradient(to right, #34495e, #7f8c8d);
+            width: 200px;
+            margin-left: auto;
+        }
+
+        #addShowtimeBtn:hover {
+            background-color: var(--light-red);
+            border-color: var(--light-red);
+        }
+
+        .modal-header {
+            background: linear-gradient(to right, #34495e, #7f8c8d);
+            color: white;
+            border-bottom: none;
+        }
+
+        .modal-title {
+            text-transform: uppercase;
+            font-weight: 300;
+            color: white;
+        }
+
+        .modal-body {
+            background-color: var(--light-bg);
+            color: black;
+        }
+
+        .form-group label {
+            color: #333;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 100;
+            font-size: 14px;
+        }
+
+        .modal-footer {
+            background-color: var(--light-bg);
+            border-top: none;
+        }
+
+        .modal-footer button {
+            color: white;
+        }
+
+        .modal-footer button.btn-secondary {
+            background-color: var(--dark-bg);
+        }
+
+        .modal-footer button.btn-secondary:hover {
+            background-color: var(--red);
+        }
+
+        .modal-footer button.btn-primary {
+            background: linear-gradient(to right, #34495e, #7f8c8d);
+        }
+
+        .modal-footer button.btn-primary:hover {
+            background-color: var(--light-red);
+        }
+
+        #addDayFormContainer,
+        #addTimeFormContainer {
+            display: block;
+        }
+
+        #addDayFormContainer .container,
+        #addTimeFormContainer .container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #addDayFormContainer h2,
+        #addTimeFormContainer h2 {
+            color: #333;
+            text-align: center;
+            font-size: 22px;
+            text-transform: uppercase;
+            font-weight: 100;
+        }
+
+        #addDayFormContainer form,
+        #addTimeFormContainer form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        #addDayFormContainer .form-group label,
+        #addDayTimeContainer .form-group label {
+            color: #333;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        #addDayFormContainer .form-control,
+        #addTimeFormContainer .form-control {
+            background-color: #f8f9fa;
+            color: #333;
+            border-color: #333;
+        }
+
+        #addDayFormContainer .btn-primary,
+        #addTimeFormContainer .btn-primary {
+            background-color: #333;
+            border-color: #333;
+            color: #f8f9fa;
+        }
+
+        #addDayFormContainer .btn-primary:hover,
+        #addTimeFormContainer .btn-primary:hover {
+            background-color: #333;
+            border-color: #333;
+            color: #f8f9fa;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 40px 0;
+            font-family: Arial, sans-serif;
+            margin-top: 20px;
+        }
+
+        .footer-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff3333;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff3333;
+        }
+
+        .footer-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+            line-height: 40px;
+            font-size: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #ff3300;
+            /* Màu nền khi hover */
+            color: #fff;
+            /* Màu icon khi hover */
+        }
+
+        /* Màu sắc riêng cho từng biểu tượng */
+        .fab.fa-facebook-square {
+            color: #3b5998;
+        }
+
+        .fab.fa-twitter-square {
+            color: #1da1f2;
+        }
+
+        .fab.fa-instagram-square {
+            color: #e1306c;
+        }
+
+        .fab.fa-youtube-square {
+            color: #ff0000;
+        }
+
+        @media (max-width: 768px) {
+            .footer .row {
+                text-align: center;
+            }
+
+            .footer .col-lg-3 {
+                margin-bottom: 20px;
+            }
+        }
+
+        .row {
+            margin-bottom: 5%;
+        }
+
+        #dateSelectInTime {
+            color: white;
+        }
+
+        .day-info {
+            cursor: pointer;
+        }
+
+        .day-info:hover {
+            background-color: #ffaa00;
+            border-color: #ffaa00;
+            color: #333;
+        }
+
+        .detail {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content-details {
+            background-color: var(--dark-bg);
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .show-details {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .show-details-row {
+            display: flex;
+            flex-direction: row;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .show-details {
+            flex: 1;
+        }
+
+        h4 {
+            color: #3366cc;
+        }
+
+        .movie-details .schedule-info {
+            margin-left: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: #ffffff;
+            border: 2px solid;
+            padding: 15px 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            display: none;
+            opacity: 0;
+            z-index: 1000;
+            animation: slideIn 0.5s ease, fadeOut 0.5s ease 2.5s;
+        }
+
+        .notification.success {
+            border-color: #28a745;
+            background: #e6f8eb;
+            color: #155724;
+        }
+
+        .notification.error {
+            border-color: #dc3545;
+            background: #fdeaea;
+            color: #721c24;
+        }
+
+        .notification-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #closeNotification {
+            margin-top: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #closeNotification:hover {
+            background: #0056b3;
+        }
+
+        .notification.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .notification.hidden {
+            display: none;
+            opacity: 0;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        .modal-dialog {
+            margin-top: 8%;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">TUZZCNM</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="home.html">TRANG CHỦ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./nav.html">TIN TỨC & SỰ KIỆN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./detailinfo.html">CÁ NHÂN</a>
+                    </li>
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" href="login.html">ĐĂNG NHẬP</a>
+                    </li>
+                    <li class="nav-item" id="nav-register">
+                        <a class="nav-link" href="register.html">ĐĂNG KÝ</a>
+                    </li>
+                    <li class="nav-item" id="nav-logout">
+                        <a class="nav-link" href="login.html">ĐĂNG XUẤT</a>
+                    </li>
+                    <li class="nav-item" id="nav-welcome">
+                        <span class="nav-link">Xin chào, <span id="username"></span>!</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="vertical-navbar">
+        <div class="container">
+            <div class="navbar-nav">
+                <a href="#" class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </a>
+                <a class="nav-link" href="./admin.html">
+                    <i class="fas fa-home"></i> Trang Chủ
+                </a>
+                <a class="nav-link" href="adminmember.html">
+                    <i class="fas fa-users"></i> Quản lý người dùng
+                </a>
+                <a class="nav-link" href="adminshowtime.html">
+                    <i class="fas fa-calendar-alt"></i> Quản lý lịch chiếu
+                </a>
+                <a class="nav-link" href="adminroom.html">
+                    <i class="fas fa-cogs"></i> Quản lý phòng chiếu
+                </a>
+                <a class="nav-link" href="adminbill.html">
+                    <i class="fas fa-file-invoice-dollar"></i> Quản lý hóa đơn
+                </a>
+                <a class="nav-link" href="adminnews.html">
+                    <i class="fas fa-newspaper"></i> Quản lý tin tức
+                </a>
+                <a class="nav-link" href="adminconfirm.html">
+                    <i class="fas fa-check-circle"></i> Quản lý thanh toán
+                </a>
+                <a class="nav-link" href="admindashboard.html">
+                    <i class="fas fa-chart-line"></i> Thống Kê
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="deleteMessage" class="alert alert-success d-none">
+        </div>
+        <div id="addMessage" class="alert alert-success d-none">
+        </div>
+        <div class="daytime-detail">
+            <h1>Lịch chiếu phim</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="addDayMessage" class="alert alert-success" style="display: none;"></div>
+                    <div id="addDayFormContainer">
+                        <div class="container mt-5">
+                            <h2 class="mb-4">Thêm ngày lịch chiếu</h2>
+                            <form id="addDayForm">
+                                <div class="form-group">
+                                    <label for="dayDate">Ngày chiếu:</label>
+                                    <input type="date" class="form-control" id="dayDate" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Thêm</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="addTimeFormContainer">
+                        <div class="container mt-5">
+                            <h2 class="mb-4">Thêm giờ mới</h2>
+                            <form id="addTimeForm">
+                                <div class="form-group">
+                                    <label for="time">Giờ chiếu (hh:mm:ss):</label>
+                                    <input type="text" class="form-control" id="time"
+                                        pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]" required>
+                                    <small id="timeHelp" class="form-text text-muted">Ví dụ: 07:30:00</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dateSelectInTime">Ngày:</label>
+                                    <select class="form-control" id="dateSelectInTime">
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Thêm</button>
+                            </form>
+                            <div id="addTimeMessage" class="alert" role="alert" style="display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" id="addShowtimeBtn">
+            <a href="#" style="color: white; text-decoration: none;" data-toggle="modal"
+                data-target="#addShowtimeModal">Thêm lịch chiếu</a>
+        </button>
+        <ul id="showingList" class="showing-list">
+            <li class="showing-item">
+                <div class="day-info" id="modalDayTime">
+                </div>
+                <div class="showing-details">
+                    <ul class="showtime-list">
+                    </ul>
+                </div>
+                <div class="action-buttons">
+                </div>
+            </li>
+        </ul>
+        <div id="detailModal" class="modal detail">
+            <div class="modal-content-details">
+                <span class="close">&times;</span>
+                <h2>Thông tin chi tiết</h2>
+                <div class="movie-details">
+                    <p id="modalMovieName" class="movie-name">Tên phim: </p>
+                    <div id="modalMovies">
+                        <div class="modal-row">
+                            <span id="modalRoom">Phòng: </span>
+                            <span id="modalStartTime">Giờ chiếu: </span>
+                            <span id="modalSchedule">Giờ hết: </span>
+                        </div>
+                    </div>
+                    <p id="modalDayTime"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Popup Thông báo -->
+    <div id="notificationPopup" class="notification hidden">
+        <div class="notification-content">
+            <p id="notificationMessage"></p>
+            <button id="closeNotification">Đóng</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addShowtimeModal" tabindex="-1" role="dialog" aria-labelledby="addShowtimeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addShowtimeModalLabel">Thêm lịch chiếu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="movieSelect">Chọn phim</label>
+                            <select class="form-control" id="movieSelect">
+                                <option>...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateSelect">Chọn ngày</label>
+                            <select class="form-control" id="dateSelect">
+                                <option>...</option>
+                            </select>
+                        </div>
+                        <div id="endTimeContainer">
+                            <label for="endTime">Giờ kết thúc:</label>
+                            <span id="endTime"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="timeSelect">Chọn giờ</label>
+                            <select class="form-control" id="timeSelect">
+                                <option>...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="roomSelect">Chọn phòng</label>
+                            <select class="form-control" id="roomSelect">
+                                <option>...</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="createShowtimeBtn">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Column 1: About -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Về Chúng Tôi</h5>
+                    <p class="footer-text">Rạp chiếu phim với công nghệ hiện đại. Trải nghiệm trải nghiệm xem phim tuyệt vời nhất tại Việt Nam!</p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Liên Kết Nhanh</h5>
+                    <ul class="footer-links">
+                        <li><a href="home.html">Trang Chủ</a></li>
+                        <li><a href="./about.html">Về Chúng Tôi</a></li>
+                        <li><a href="./contact.html">Liên Hệ</a></li>
+                        <li><a href="./terms.html">Điều Khoản</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Follow Us -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Kết Nối</h5>
+                    <div class="social-icons">
+                        <a href="#" class="fab fa-facebook-square" target="_blank"></a>
+                        <a href="#" class="fab fa-twitter-square" target="_blank"></a>
+                        <a href="#" class="fab fa-instagram-square" target="_blank"></a>
+                        <a href="#" class="fab fa-youtube-square" target="_blank"></a>
+                    </div>
+                </div>
+
+                <!-- Column 4: Contact -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Liên Hệ</h5>
+                    <p class="footer-text">Địa chỉ: Số 3, Cầu Giấy, Hà Nội, Việt Nam</p>
+                    <p class="footer-text">Điện thoại: 0845658816</p>
+                    <p class="footer-text">Email: lilltuzz1509@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container text-center mt-4">
+            <p class="footer-text">© 2025 CGV Cinemas. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        function fetchMovies() {
+            axios.get('http://localhost:5050/movie/all')
+                .then(function (response) {
+                    const movies = response.data;
+                    const movieSelect = document.getElementById('movieSelect');
+                    movies.forEach(function (movie) {
+                        const option = document.createElement('option');
+                        option.text = movie.name;
+                        option.value = movie.id;
+                        movieSelect.add(option);
+                    });
+                })
+                .catch(function (error) {
+                    console.error('Error fetching movies:', error);
+                });
+        }
+        $('#addShowtimeModal').on('show.bs.modal', function (event) {
+            fetchMovies();
+        });
+
+        function fetchDays() {
+            axios.get('http://localhost:5050/daytimes/all')
+                .then(function (response) {
+                    const days = response.data;
+                    const dateSelect = document.getElementById('dateSelect');
+                    dateSelect.innerHTML = '';
+                    days.forEach(function (day) {
+                        const option = document.createElement('option');
+                        option.text = day.day_time;
+                        option.value = day.id;
+                        dateSelect.appendChild(option);
+                    });
+                })
+                .catch(function (error) {
+                    console.error('Error fetching days:', error);
+                });
+        }
+
+        $('#addShowtimeModal').on('show.bs.modal', function (event) {
+            fetchDays();
+        });
+
+        const token = localStorage.getItem('token');
+        const username = localStorage.getItem('username');
+        if (token && username) {
+            document.getElementById('nav-login').style.display = 'none';
+            document.getElementById('nav-register').style.display = 'none';
+
+            document.getElementById('nav-welcome').style.display = 'block';
+            document.getElementById('username').textContent = username;
+        }
+
+        console.log('Token:', token);
+        if (!token) {
+            console.error('Token not found!');
+        } else {
+            var headers = {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+        }
+
+        function fetchSchedule(daytimeId) {
+            axios.get(`http://localhost:5050/schedules/daytime/${daytimeId}`, { headers })
+                .then(function (response) {
+                    const schedules = response.data;
+                    const timeSelect = document.getElementById('timeSelect');
+                    timeSelect.innerHTML = '';
+                    schedules.forEach(function (schedule) {
+                        const option = document.createElement('option');
+                        option.text = schedule.startTime;
+                        option.value = schedule.id;
+                        timeSelect.appendChild(option);
+                    });
+                    console.log('Lịch chiếu cho daytimeId:', daytimeId);
+                    console.log('Danh sách lịch chiếu:', schedules);
+                })
+                .catch(function (error) {
+                    console.error('Lỗi khi lấy lịch chiếu:', error);
+                });
+        }
+
+        document.getElementById('timeSelect').addEventListener('change', function () {
+            const selectedScheduleId = this.value;
+            const selectedStartTime = this.options[this.selectedIndex].text;
+            const selectedMovieId = document.getElementById('movieSelect').value;
+
+            console.log('Selected schedule id:', selectedScheduleId);
+            console.log('Selected start time:', selectedStartTime);
+            console.log('Selected movie id:', selectedMovieId);
+
+            fetchRooms(selectedStartTime);
+            const requestData = {
+                movieId: parseInt(selectedMovieId),
+                startTime: selectedStartTime
+            };
+
+            console.log('Request data:', requestData);
+            axios.post('http://localhost:5050/showtimes/calculate-end-time', requestData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(function (response) {
+                    const endTime = response.data;
+                    document.getElementById('endTime').textContent = endTime;
+                })
+                .catch(function (error) {
+                    console.error('Lỗi khi tính giờ kết thúc:', error);
+                });
+        });
+
+
+        document.getElementById('dateSelect').addEventListener('change', function () {
+            const selectedDaytimeId = this.value;
+            console.log('Selected daytimeId:', selectedDaytimeId);
+            fetchSchedule(selectedDaytimeId);
+        });
+
+        function fetchRooms(startTime) {
+            const selectedDaytimeId = document.getElementById('dateSelect').value;
+
+            axios.get(`http://localhost:5050/rooms/rooms-for-schedule`, {
+                params: {
+                    startTime: startTime,
+                    daytimeId: selectedDaytimeId
+                },
+                headers: headers
+            })
+                .then(function (response) {
+                    const rooms = response.data;
+                    const roomSelect = document.getElementById('roomSelect');
+                    let hasAvailableRoom = false;
+                    roomSelect.innerHTML = '';
+
+                    rooms.forEach(function (room) {
+                        if (room.status === false) {
+                            hasAvailableRoom = true;
+                            const option = document.createElement('option');
+                            option.text = room.name;
+                            option.value = room.id;
+                            roomSelect.appendChild(option);
+                        }
+                    });
+                    if (!hasAvailableRoom) {
+                        const option = document.createElement('option');
+                        option.text = 'Hết phòng';
+                        option.disabled = true;
+                        roomSelect.appendChild(option);
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Lỗi khi lấy danh sách phòng:', error);
+                });
+        }
+
+
+        $('#addShowtimeModal').on('show.bs.modal', function (event) {
+            fetchRooms();
+        });
+
+        document.getElementById('createShowtimeBtn').addEventListener('click', function () {
+            const movieSelect = document.getElementById('movieSelect');
+            const roomSelect = document.getElementById('roomSelect');
+            const timeSelect = document.getElementById('timeSelect');
+
+            const selectedMovieId = movieSelect.options[movieSelect.selectedIndex].value;
+            const selectedRoomId = roomSelect.options[roomSelect.selectedIndex].value;
+            const selectedScheduleId = timeSelect.options[timeSelect.selectedIndex].value;
+
+            const showtimeData = {
+                movie: {
+                    id: parseInt(selectedMovieId)
+                },
+                room: {
+                    id: parseInt(selectedRoomId)
+                },
+                schedule: {
+                    id: parseInt(selectedScheduleId)
+                }
+            };
+
+            const token = localStorage.getItem('token');
+            console.log('Token:', token);
+
+            if (!token) {
+                console.error('Token not found!');
+            } else {
+                var headers = {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                };
+            }
+            axios.post('http://localhost:5050/showtimes/create', showtimeData, { headers })
+                .then(function (response) {
+                    showNotification('Thêm lịch chiếu thành công!', true);
+                    $('#addShowtimeModal').modal('hide');
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+                })
+                .catch(function (error) {
+                    showNotification('Thêm lịch chiếu thất bại: Có lỗi xảy ra!', false);
+                    console.error('Lỗi khi tạo lịch chiếu:', error);
+                });
+
+        })
+        document.getElementById('addDayForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const dayDate = $('#dayDate').val();
+            const newData = {
+                day_time: dayDate
+            };
+            console.log("daytime", newData);
+            axios.post('http://localhost:5050/daytimes/create', newData, { headers })
+                .then(function (response) {
+                    console.log('Thêm ngày thành công:', response.data);
+                    showNotification('Thêm ngày thành công!', true);
+                })
+                .catch(function (error) {
+                    console.error('Lỗi khi thêm ngày:', error);
+                    showNotification('Thêm ngày thất bại!', false);
+                });
+        });
+
+        $(document).ready(function () {
+            function fetchDaysAndPopulateSelectBox() {
+                axios.get('http://localhost:5050/daytimes/all')
+                    .then(function (response) {
+                        const days = response.data;
+                        const dateSelect = $('#dateSelectInTime');
+                        dateSelect.empty();
+                        days.forEach(function (day) {
+                            dateSelect.append($('<option>', {
+                                value: day.id,
+                                text: day.day_time
+                            }));
+                        });
+                    })
+                    .catch(function (error) {
+                        console.error('Error fetching days:', error);
+                    });
+            }
+
+            fetchDaysAndPopulateSelectBox();
+            $('#addTimeForm').submit(function (event) {
+                event.preventDefault();
+                const time = $('#time').val();
+                const dayId = $('#dateSelectInTime').val();
+
+                const newData = {
+                    startTime: time,
+                    day_time: {
+                        id: parseInt(dayId)
+                    }
+                };
+                axios.post('http://localhost:5050/schedules/create', newData, { headers })
+                    .then(function (response) {
+                        console.log('Thêm giờ thành công:', response.data);
+                        showNotification('Thêm giờ chiếu thành công!', true);
+                    })
+                    .catch(function (error) {
+                        console.error('Lỗi khi thêm giờ:', error);
+                        showNotification('Thêm giờ chiếu thất bại!', false);
+                    });
+            });
+        });
+
+        function fetchShowtimes() {
+            axios.get('http://localhost:5050/showtimes/all')
+                .then(function (response) {
+                    const showtimes = response.data;
+                    const groupedShowtimes = {};
+
+                    showtimes.forEach(function (showtime) {
+                        const date = showtime.schedule.day_time.day_time;
+                        const movieName = showtime.movie.name;
+                        if (!groupedShowtimes[date]) {
+                            groupedShowtimes[date] = {};
+                        }
+                        if (!groupedShowtimes[date][movieName]) {
+                            groupedShowtimes[date][movieName] = [];
+                        }
+                        groupedShowtimes[date][movieName].push(showtime);
+                    });
+
+                    const showingList = document.getElementById('showingList');
+                    showingList.innerHTML = '';
+                    Object.keys(groupedShowtimes).forEach(function (date) {
+                        const dayMovies = groupedShowtimes[date];
+                        const dayItem = document.createElement('li');
+                        dayItem.classList.add('showing-item');
+
+                        const dayHeader = document.createElement('h3');
+                        dayHeader.textContent = formatDate(date);
+                        dayItem.appendChild(dayHeader);
+                        dayItem.addEventListener('click', function () {
+                            showDayDetails(dayMovies, date);
+                        });
+
+                        showingList.appendChild(dayItem);
+                    });
+                })
+                .catch(function (error) {
+                    console.error('Error fetching showtimes:', error);
+                });
+        }
+
+        function formatDate(dateString) {
+            const dateObj = new Date(dateString);
+            const month = dateObj.toLocaleString('en-US', { month: 'long' });
+            const day = dateObj.getDate();
+            return `${day} ${month}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchShowtimes();
+        });
+
+        function fetchDaytimeDetails(daytimeId) {
+            axios.get(`http://localhost:5050/daytimes/details/${daytimeId}`, { headers })
+                .then(function (response) {
+                    const details = response.data;
+                    showModal(details);
+                })
+                .catch(function (error) {
+                    console.error('Error fetching daytime details:', error);
+                });
+        }
+
+        function resetModalContent() {
+            const modalMovieName = document.getElementById('modalMovieName');
+            const modalDayTime = document.getElementById('modalDayTime');
+            const modalSchedule = document.getElementById('modalSchedule');
+            const modalRoom = document.getElementById('modalRoom');
+            const modalStartTime = document.getElementById('modalStartTime');
+
+            if (modalMovieName) modalMovieName.textContent = '';
+            if (modalDayTime) modalDayTime.textContent = '';
+            if (modalSchedule) modalSchedule.textContent = '';
+            if (modalRoom) modalRoom.textContent = '';
+            if (modalStartTime) modalStartTime.textContent = '';
+        }
+
+        function showDayDetails(dayMovies, date) {
+            resetModalContent();
+
+            const modalDayTime = document.getElementById('modalDayTime');
+            if (modalDayTime) {
+                modalDayTime.textContent = `Ngày chiếu: ${formatDate(date)}`;
+            } else {
+                console.error('Element modalDayTime không tồn tại trong DOM.');
+                return;
+            }
+
+            const modalMoviesContainer = document.getElementById('modalMovies');
+            if (!modalMoviesContainer) {
+                console.error('Container của modalMovies không tồn tại trong DOM.');
+                return;
+            }
+            modalMoviesContainer.innerHTML = '';
+
+            Object.keys(dayMovies).forEach(function (movieName) {
+                const movieShowtimes = dayMovies[movieName];
+
+                const movieDiv = document.createElement('div');
+                movieDiv.classList.add('movie-details');
+
+                const movieHeader = document.createElement('h4');
+                movieHeader.textContent = `Tên phim: ${movieName}`;
+                movieDiv.appendChild(movieHeader);
+
+                movieShowtimes.forEach(function (showtime) {
+                    const schedule = showtime.schedule;
+
+                    const showDetailsDiv = document.createElement('div');
+                    showDetailsDiv.classList.add('show-details');
+
+                    const roomInfo = document.createElement('p');
+                    roomInfo.textContent = `Phòng: ${showtime.room ? showtime.room.name : 'N/A'}`;
+                    showDetailsDiv.appendChild(roomInfo);
+
+                    const scheduleInfo = document.createElement('p');
+                    scheduleInfo.textContent = `Giờ hết: ${showtime.endTime}`;
+                    showDetailsDiv.appendChild(scheduleInfo);
+
+                    const startTimeInfo = document.createElement('p');
+                    startTimeInfo.textContent = `Giờ chiếu: ${schedule.startTime}`;
+                    showDetailsDiv.appendChild(startTimeInfo);
+
+                    showDetailsDiv.addEventListener('click', function () {
+                        console.log('Thông tin lịch chiếu:', showtime);
+                    });
+
+                    movieDiv.appendChild(showDetailsDiv);
+                });
+                modalMoviesContainer.appendChild(movieDiv);
+            });
+
+            const modal = document.getElementById('detailModal');
+            if (modal) {
+                modal.style.display = 'block';
+            } else {
+                console.error('Element detailModal không tồn tại trong DOM.');
+                return;
+            }
+
+            const closeBtn = modal.querySelector('.close');
+            if (closeBtn) {
+                closeBtn.onclick = function (event) {
+                    event.stopPropagation();
+                    modal.style.display = 'none';
+                }
+            } else {
+                console.error('Close button không tồn tại trong modal.');
+            }
+
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+        }
+
+        function formatDate(dateString) {
+            const dateObj = new Date(dateString);
+            const month = dateObj.toLocaleString('en-US', { month: 'long' });
+            const day = dateObj.getDate();
+            return `${day} ${month}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchShowtimes();
+        });
+
+        function showNotification(message, isSuccess = true) {
+            const notificationPopup = document.getElementById('notificationPopup');
+            const notificationMessage = document.getElementById('notificationMessage');
+
+            notificationMessage.textContent = message;
+            notificationPopup.classList.remove('hidden', 'success', 'error');
+            notificationPopup.classList.add('show', isSuccess ? 'success' : 'error');
+
+            setTimeout(function () {
+                notificationPopup.classList.remove('show');
+                notificationPopup.classList.add('hidden');
+            }, 3000);
+        }
+
+        document.getElementById('closeNotification').addEventListener('click', function () {
+            const notificationPopup = document.getElementById('notificationPopup');
+            notificationPopup.classList.remove('show');
+            notificationPopup.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

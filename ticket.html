@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>CGV Cinemas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .navbar {
+            background-color: #b71c1c;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand:hover {
+            color: #ffcc00;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .navbar a:hover {
+            color: #ffcc00;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .movie-title {
+            color: #ffcc00;
+        }
+
+        .footer a {
+            color: #ff3333;
+            margin-right: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #ffcc00;
+        }
+
+        /* Container chứa vé */
+        .ticket-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            /* Khoảng cách giữa các vé */
+            margin-top: 50px;
+        }
+
+        /* Card của mỗi vé */
+        .ticket {
+            background: linear-gradient(135deg, #292929, #1f1f1f);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            max-width: 320px;
+            /* Chiều rộng tối đa */
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ticket:hover {
+            transform: translateY(-10px);
+            /* Hiệu ứng nổi lên khi hover */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Hình ảnh phim */
+        .ticket-img {
+            width: 65%;
+            height: auto;
+            display: block;
+            margin-top: 2%;
+            border-radius: 10%;
+            border-bottom: 3px solid #ff4c4c;
+        }
+
+        /* Phần thông tin */
+        .ticket-info {
+            padding: 20px;
+            color: #e0e0e0;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .ticket-info p {
+            margin: 10px 0;
+        }
+
+        .ticket-info span {
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        /* Giá vé */
+        .ticket h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff4c4c;
+            margin: 10px;
+        }
+
+        /* Nút hành động */
+        .ticket button {
+            background: #ff4c4c;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .ticket button:hover {
+            background: #ffd700;
+            color: #292929;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .ticket-detail {
+            margin-top: 3%;
+            background: linear-gradient(90deg, #c0392b, #8e44ad);
+            border-radius: 10%;
+        }
+
+        .movie-detail {
+            padding: 16px 20px;
+        }
+
+        .movie-title {
+            text-transform: uppercase;
+        }
+
+        .footer {
+            margin-top: 3%;
+            padding: 50px 0;
+        }
+
+        .footer ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .footer ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer ul li a:hover {
+            color: #ff3333;
+        }
+
+        .footer .fab {
+            font-size: 24px;
+            color: white;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer .fab:hover {
+            color: #ff3333;
+        }
+
+        .footer p {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">TUZZCNM</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="home.html">TRANG CHỦ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./nav.html">TIN TỨC & SỰ KIỆN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./detailinfo.html">CÁ NHÂN</a>
+                    </li>
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" href="login.html">ĐĂNG NHẬP</a>
+                    </li>
+                    <li class="nav-item" id="nav-register">
+                        <a class="nav-link" href="register.html">ĐĂNG KÝ</a>
+                    </li>
+                    <li class="nav-item" id="nav-logout">
+                        <a class="nav-link" href="login.html">ĐĂNG XUẤT</a>
+                    </li>
+                    <li class="nav-item" id="nav-welcome">
+                        <span class="nav-link">Xin chào, <span id="username"></span>!</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarNav2">
+                <ul class="navbar-nav mr-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Phim Đang Chiếu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="comming.html">Phim Sắp Chiếu</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container ticket-detail">
+        <div class="movie-detail">
+            <h2 class="movie-title">Vé của bạn</h2>
+            <div class="row ticket-container">
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-4">Liên Kết Nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Trang Chủ</a></li>
+                        <li><a href="#">Phim Đang Chiếu</a></li>
+                        <li><a href="#">Phim Sắp Chiếu</a></li>
+                        <li><a href="#">Tìm Rạp & Phim</a></li>
+                        <li><a href="#">Khuyến Mãi & Sự Kiện</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-4">Theo Dõi Chúng Tôi</h5>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-youtube"></i></a></li>
+                    </ul>
+                    <p class="mt-3">© 2024 Tunz Cinemas. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = localStorage.getItem('token');
+            const username = localStorage.getItem('username');
+
+            if (token && username) {
+                document.getElementById('nav-login').style.display = 'none';
+                document.getElementById('nav-register').style.display = 'none';
+
+                document.getElementById('nav-welcome').style.display = 'block';
+                document.getElementById('username').textContent = username;
+            }
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const billId = urlParams.get('billId');
+
+        if (billId) {
+            axios
+                .get(`http://localhost:5050/tickets/bill/${billId}`)
+                .then(response => {
+                    const ticketData = response.data;
+                    displayTicketDetails(ticketData);
+                })
+                .catch(error => {
+                    console.error('Error fetching ticket details:', error);
+                });
+        } else {
+            console.error('Bill ID is missing in the URL');
+        }
+
+        function displayTicketDetails(ticketDataArray) {
+            console.log("Ticket Data Array:", ticketDataArray);
+
+            if (!ticketDataArray || ticketDataArray.length === 0) {
+                console.error("Ticket data is missing or incomplete");
+                return;
+            }
+
+            // Lặp qua mảng các vé và tạo các phần tử HTML mới cho mỗi vé
+            ticketDataArray.forEach(ticketData => {
+                // Kiểm tra xem dữ liệu của vé có đầy đủ không
+                if (!ticketData || !ticketData.seat_booking_id.showtime_id || !ticketData.seat_booking_id.showtime_id.movie) {
+                    console.error("Ticket data is missing or incomplete");
+                    return;
+                }
+
+                // Tạo phần tử HTML mới cho mỗi vé
+                const ticketElement = document.createElement('div');
+                ticketElement.classList.add('col-md-4');
+
+                // Tạo các phần tử HTML để chứa thông tin vé
+                ticketElement.innerHTML = `
+                    <div class="ticket">
+                        <img class="ticket-img" src="./image cinema/${ticketData.seat_booking_id.showtime_id.movie.image}" alt="Movie Poster">
+                        <div class="ticket-info">
+                            <p><span>Phim:</span> ${ticketData.seat_booking_id.showtime_id.movie.name}</p>
+                            <p><span>Tên người đặt:</span> ${ticketData.bill_id.member_id.fullname}</p>
+                            <p><span>Ghế đã đặt:</span> ${ticketData.seat_booking_id.seat_id.name}</p>
+                            <p><span>Phòng chiếu:</span> ${ticketData.seat_booking_id.showtime_id.room.name}</p>
+                            <p><span>Thời gian chiếu:</span> ${ticketData.seat_booking_id.showtime_id.schedule.startTime}<span> đến : </span>${ticketData.seat_booking_id.showtime_id.endTime}</p>
+                            <h2>Giá vé: ${ticketData.price}</h2>
+                        </div>
+                    </div>
+                `;
+
+                const ticketsContainer = document.querySelector('.ticket-container');
+                ticketsContainer.appendChild(ticketElement);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

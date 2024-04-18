@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin Tức & Sự Kiện - Tunz Cinemas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            flex: 1;
+
+        }
+
+        .navbar {
+            background-color: #660000;
+            color: white;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand:hover {
+            color: #ffcc00;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .navbar a {
+            color: white;
+        }
+
+        .new-detail {
+            background-color: #444;
+            margin-top: 3%;
+            margin-bottom: 5%;
+            border-radius: 10px;
+        }
+
+        .section-title {
+            font-size: 30px;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            margin: 20px 0 30px;
+            font-weight: 300;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        #carouselExampleIndicators .carousel-inner img {
+            border-radius: 10px;
+            transition: transform 0.5s ease;
+        }
+
+        #carouselExampleIndicators .carousel-inner img:hover {
+            transform: scale(1.03);
+        }
+
+        .article {
+            background: linear-gradient(135deg, #2c2c2c, #393939);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .article:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .article img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            /* Giữ tỉ lệ mà không bị méo */
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* #carouselExampleIndicators .carousel-inner img {
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.5s ease;
+        } */
+
+        .article p {
+            color: #bdbdbd;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .article .read-more {
+            display: inline-block;
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .article .read-more:hover {
+            color: #fff59d;
+        }
+
+        #news-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* Tạo 3 cột đều */
+            gap: 25px;
+            margin: 0 auto;
+            max-width: 1200px;
+            /* Điều chỉnh chiều rộng tối đa */
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 40px 0;
+            font-family: Arial, sans-serif;
+            margin-top: 20px;
+        }
+
+        .footer-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff3333;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff3333;
+        }
+
+        .footer-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+            line-height: 40px;
+            font-size: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #ff3300;
+            color: #fff;
+        }
+
+        .fab.fa-facebook-square {
+            color: #3b5998;
+        }
+
+        .fab.fa-twitter-square {
+            color: #1da1f2;
+        }
+
+        .fab.fa-instagram-square {
+            color: #e1306c;
+        }
+
+        .fab.fa-youtube-square {
+            color: #ff0000;
+        }
+
+        @media (max-width: 768px) {
+            .footer .row {
+                text-align: center;
+            }
+
+            .footer .col-lg-3 {
+                margin-bottom: 20px;
+            }
+        }
+
+        .truncate {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 50%;
+            text-align: center;
+            position: relative;
+        }
+
+        h3 {
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #000;
+        }
+
+        #modal-image {
+            display: block;
+            max-width: 80%;
+            margin-left: 10%;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            height: auto;
+        }
+
+        .full-description {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">TUZZCNM</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">TRANG CHỦ</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="./nav.html">TIN TỨC & SỰ KIỆN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./detailinfo.html">CÁ NHÂN</a>
+                    </li>
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" href="login.html">ĐĂNG NHẬP</a>
+                    </li>
+                    <li class="nav-item" id="nav-register">
+                        <a class="nav-link" href="register.html">ĐĂNG KÝ</a>
+                    </li>
+                    <li class="nav-item" id="nav-logout">
+                        <a class="nav-link" href="login.html">ĐĂNG XUẤT</a>
+                    </li>
+                    <li class="nav-item" id="nav-welcome">
+                        <span class="nav-link">Xin chào, <span id="username"></span>!</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container new-detail">
+        <h2 class="section-title">Tin Tức & Sự Kiện</h2>
+        <div id="news-container"></div>
+    </div>
+    <div id="news-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span id="close" class="close">&times;</span>
+            <h3 id="modal-title"></h3>
+            <img id="modal-image" src="" alt="Article Image"/>
+            <p id="modal-description"></p>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Column 1: About -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Về Chúng Tôi</h5>
+                    <p class="footer-text">Rạp chiếu phim với công nghệ hiện đại. Trải nghiệm trải nghiệm xem phim tuyệt vời nhất tại Việt Nam!</p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Liên Kết Nhanh</h5>
+                    <ul class="footer-links">
+                        <li><a href="home.html">Trang Chủ</a></li>
+                        <li><a href="./about.html">Về Chúng Tôi</a></li>
+                        <li><a href="./contact.html">Liên Hệ</a></li>
+                        <li><a href="./terms.html">Điều Khoản</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Follow Us -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Kết Nối</h5>
+                    <div class="social-icons">
+                        <a href="#" class="fab fa-facebook-square" target="_blank"></a>
+                        <a href="#" class="fab fa-twitter-square" target="_blank"></a>
+                        <a href="#" class="fab fa-instagram-square" target="_blank"></a>
+                        <a href="#" class="fab fa-youtube-square" target="_blank"></a>
+                    </div>
+                </div>
+
+                <!-- Column 4: Contact -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Liên Hệ</h5>
+                    <p class="footer-text">Địa chỉ: Số 3, Cầu Giấy, Hà Nội, Việt Nam</p>
+                    <p class="footer-text">Điện thoại: 0845658816</p>
+                    <p class="footer-text">Email: lilltuzz1509@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container text-center mt-4">
+            <p class="footer-text">© 2025 CGV Cinemas. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = localStorage.getItem('token');
+            const username = localStorage.getItem('username');
+
+            if (token && username) {
+                document.getElementById('nav-login').style.display = 'none';
+                document.getElementById('nav-register').style.display = 'none';
+                document.getElementById('nav-welcome').style.display = 'block';
+                document.getElementById('username').textContent = username;
+            }
+
+            if (!token) {
+                console.error('Token not found!');
+                return;
+            }
+
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+
+            axios.get('http://localhost:5050/news/all', { headers })
+                .then(response => {
+                    const newsContainer = document.getElementById('news-container');
+                    response.data.forEach(article => {
+                        const articleDiv = document.createElement('div');
+                        articleDiv.classList.add('article');
+                        articleDiv.innerHTML = `
+                    <h2 class="truncate" onclick="toggleText(this)">${article.name}</h2>
+                    <p>${article.short_desc}</p>
+                    <img src="./image cinema/${article.image}" alt="Full Image">
+                    <p class="full-description">${article.description}</p>
+                    <a href="#" class="read-more" data-id="${article.id}">Đọc tiếp <i class="fas fa-chevron-right"></i></a>
+                `;
+                        newsContainer.appendChild(articleDiv);
+                    });
+
+                    // Gắn sự kiện click cho nút "Đọc tiếp" sau khi tin tức được tải
+                    document.querySelectorAll('.read-more').forEach(button => {
+                        button.addEventListener('click', function (event) {
+                            event.preventDefault();
+                            const articleId = this.getAttribute('data-id');
+
+                            if (!articleId) {
+                                console.error('Error: articleId is not provided');
+                                return;
+                            }
+
+                            // Lấy token từ localStorage
+                            const token = localStorage.getItem('token');
+
+                            if (!token) {
+                                console.error('Error: Token is not available');
+                                return;
+                            }
+
+                            // Cấu hình headers với Authorization token
+                            const headers = {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            };
+
+                            // Fetch dữ liệu chi tiết bài viết với headers đã thêm token
+                            fetch(`http://localhost:5050/news/detail/${articleId}`, { headers })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(`HTTP error! status: ${response.status}`);
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    // Đảm bảo modal và các thành phần trong modal tồn tại
+                                    const newsModal = document.getElementById('news-modal');
+                                    const modalTitle = document.getElementById('modal-title');
+                                    const modalDescription = document.getElementById('modal-description');
+                                    const modalImage = document.getElementById('modal-image');
+
+                                    if (!newsModal || !modalTitle || !modalDescription || !modalImage) {
+                                        throw new Error('Modal elements are missing in the DOM');
+                                    }
+
+                                    modalTitle.textContent = data.name;
+                                    modalDescription.textContent = data.description;
+
+                                    // Cập nhật ảnh bài viết
+                                    if (data.image) {
+                                        modalImage.src = './image cinema/' + data.image;
+                                        modalImage.style.display = 'block';  // Hiển thị ảnh
+                                    } else {
+                                        modalImage.style.display = 'none';  // Ẩn ảnh nếu không có
+                                    }
+
+                                    // Hiển thị modal
+                                    newsModal.style.display = 'flex';
+                                })
+                                .catch(error => console.error('Error fetching article:', error));
+                        });
+                    });
+                })
+                .catch(error => console.error('Error fetching news:', error));
+
+            // Gắn sự kiện đóng modal
+            const newsModal = document.getElementById('news-modal');
+            const closeButton = document.getElementById('close');
+
+            if (newsModal && closeButton) {
+                closeButton.addEventListener('click', () => {
+                    newsModal.style.display = 'none';
+                });
+            }
+        });
+
+        function toggleText(element) {
+            if (element.style.whiteSpace === "normal") {
+                element.style.whiteSpace = "nowrap";  // Gấp gọn văn bản
+                element.style.textOverflow = "ellipsis";  // Hiển thị dấu ba chấm
+            } else {
+                element.style.whiteSpace = "normal";  // Hiển thị văn bản đầy đủ
+                element.style.textOverflow = "unset";  // Không có dấu ba chấm
+            }
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>

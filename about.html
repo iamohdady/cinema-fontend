@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Về Chúng Tôi - Tunz Cinemas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        .navbar {
+            background-color: #660000;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand:hover {
+            color: #ffcc00;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .footer a {
+            color: #ff3333;
+        }
+
+        .section-title {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2rem;
+            color: #ff3333;
+        }
+
+        .about-text {
+            text-align: justify;
+        }
+
+        .about-img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .about-section {
+            margin-bottom: 40px;
+        }
+
+        .img-fluid {
+            max-width: 20%;
+        }
+
+        .team-member img {
+            border-radius: 50%;
+        }
+
+        .team-member {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .team-member h5 {
+            margin-top: 10px;
+            color: #ff3333;
+        }
+
+        .footer {
+            padding: 50px 0;
+        }
+
+        .footer ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .footer ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer ul li a:hover {
+            color: #ff3333;
+        }
+
+        .footer .fab {
+            font-size: 24px;
+            color: white;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer .fab:hover {
+            color: #ff3333;
+        }
+
+        .footer p {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Phần Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+
+            <a class="navbar-brand" href="#">TUZZCNM</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">WEB</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./nav.html">TIN TỨC & SỰ KIỆN</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="./about.html">CINEMAS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./detailinfo.html">MEMBER</a>
+                    </li>
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" href="login.html">ĐĂNG NHẬP</a>
+                    </li>
+                    <li class="nav-item" id="nav-register">
+                        <a class="nav-link" href="register.html">ĐĂNG KÝ</a>
+                    </li>
+                    <li class="nav-item" id="nav-logout">
+                        <a class="nav-link" href="login.html">ĐĂNG XUẤT</a>
+                    </li>
+                    <li class="nav-item" id="nav-welcome">
+                        <span class="nav-link">Xin chào, <span id="username"></span>!</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- Phần Content (Trang Về Chúng Tôi) -->
+    <div class="container mt-4">
+        <h2 class="section-title">Về Chúng Tôi</h2>
+        <div class="about-section">
+            <p class="about-text">
+                Tunz Cinemas được thành lập với sứ mệnh mang đến cho khán giả những trải nghiệm xem phim đỉnh cao. Chúng
+                tôi tự hào về hệ thống rạp chiếu hiện đại, đội ngũ nhân viên tận tâm, và các dịch vụ đa dạng nhằm đáp
+                ứng mọi nhu cầu của khách hàng.
+            </p>
+            <img src="./image cinema/anhabout.chn" alt="Rạp chiếu phim Tunz Cinemas" class="about-img">
+        </div>
+
+        <div class="about-section">
+            <h2 class="section-title">Lịch Sử Hình Thành</h2>
+            <p class="about-text">
+                Tunz Cinemas bắt đầu từ một rạp chiếu nhỏ với mong muốn mang điện ảnh đến gần hơn với mọi người. Trải
+                qua nhiều năm phát triển, chúng tôi đã mở rộng ra nhiều chi nhánh trên toàn quốc, luôn đổi mới và cải
+                tiến để mang đến trải nghiệm tốt nhất cho khán giả.
+            </p>
+            <img src="./image cinema/anhabout2.jpg" alt="Lịch sử hình thành Tunz Cinemas" class="about-img">
+        </div>
+
+        <div class="about-section">
+            <h2 class="section-title">Nhóm Phát Triển</h2>
+            <div class="row">
+                <div class=" team-member">
+                    <img src="./image cinema/avatar.jpg" alt="Thành viên 1" class="img-fluid">
+                    <h5>Đỗ Gia Tuấn</h5>
+                    <p>Quản lý website</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phần Footer -->
+    <footer class="footer bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-4">Liên Kết Nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Trang Chủ</a></li>
+                        <li><a href="#">Phim Đang Chiếu</a></li>
+                        <li><a href="#">Phim Sắp Chiếu</a></li>
+                        <li><a href="#">Tìm Rạp & Phim</a></li>
+                        <li><a href="#">Khuyến Mãi & Sự Kiện</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-4">Theo Dõi Chúng Tôi</h5>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-youtube"></i></a></li>
+                    </ul>
+                    <p class="mt-3">© 2024 Tunz Cinemas. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Thêm các thư viện JavaScript cần thiết cho Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Kiểm tra xem người dùng đã đăng nhập bằng cách kiểm tra xem token có tồn tại trong localStorage hay không
+            const token = localStorage.getItem('token');
+            const username = localStorage.getItem('username'); // Giả sử bạn cũng lưu username trong localStorage khi đăng nhập thành công
+
+            if (token && username) {
+                // Ẩn các mục "Đăng nhập" và "Đăng ký"
+                document.getElementById('nav-login').style.display = 'none';
+                document.getElementById('nav-register').style.display = 'none';
+
+                // Hiển thị câu chào mừng người dùng
+                document.getElementById('nav-welcome').style.display = 'block';
+                document.getElementById('username').textContent = username;
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <title>TUZZCNM Cinemas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            flex: 1;
+            /* This ensures the body takes up all available space */
+
+        }
+        
+        .navbar {
+            background-color: #660000;
+            color: white;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand:hover {
+            color: #ffcc00;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .navbar a {
+            color: white;
+        }
+
+        .footer a {
+            color: #ff3333;
+        }
+
+    
+        .info-detail {
+            background-color: #444;
+            margin-top: 3%;
+            margin-bottom: 5%;
+            border-radius: 10px;
+        }
+
+        .change-button {
+            background-color: #343a40;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 40px;
+        }
+
+        .change-button:hover {
+            background-color: #555;
+        }
+
+        .account-section {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin-top: 50px;
+            gap: 20px;
+        }
+
+        .account-section .left {
+            width: 20%;
+            background: linear-gradient(135deg, #333, #444);
+            color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .account-section .left:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        .account-section .left img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .account-section .left ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .account-section .left ul li {
+            margin-bottom: 15px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .account-section .left a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .account-section .left a:hover {
+            color: yellow;
+        }
+
+        .account-section .right {
+            width: 60%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .account-section .right h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #660000;
+        }
+
+        .account-section .right form label {
+            font-weight: bold;
+        }
+
+        .account-section .right p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .right {
+            width: 100%;
+            max-width: 500px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Hiệu ứng khi hover form */
+        .right:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tiêu đề */
+        .right h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #660000;
+            font-weight: 600;
+        }
+
+
+        .user-info p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            background-color: #343a40;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buttons button:hover {
+            background-color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .account-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .account-section .left,
+            .account-section .right {
+                width: 80%;
+                margin-bottom: 20px;
+            }
+        }
+
+        .yellow-text {
+            color: yellow !important; 
+        
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 40px 0;
+            font-family: Arial, sans-serif;
+            margin-top: auto;
+            /* Pushes footer to the bottom */
+        }
+
+        .footer-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff3333;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff3333;
+        }
+
+        .footer-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+            line-height: 40px;
+            font-size: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #ff3300;
+            /* Màu nền khi hover */
+            color: #fff;
+            /* Màu icon khi hover */
+        }
+
+        /* Màu sắc riêng cho từng biểu tượng */
+        .fab.fa-facebook-square {
+            color: #3b5998;
+        }
+
+        .fab.fa-twitter-square {
+            color: #1da1f2;
+        }
+
+        .fab.fa-instagram-square {
+            color: #e1306c;
+        }
+
+        .fab.fa-youtube-square {
+            color: #ff0000;
+        }
+
+        @media (max-width: 768px) {
+            .footer .row {
+                text-align: center;
+            }
+
+            .footer .col-lg-3 {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">TUZZCNM</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">TRANG CHỦ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./nav.html">TIN TỨC & SỰ KIỆN</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="./detailinfo.html">CÁ NHÂN</a>
+                    </li>
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" href="login.html">ĐĂNG NHẬP</a>
+                    </li>
+                    <li class="nav-item" id="nav-register">
+                        <a class="nav-link" href="register.html">ĐĂNG KÝ</a>
+                    </li>
+                    <li class="nav-item" id="nav-logout">
+                        <a class="nav-link" href="login.html">ĐĂNG XUẤT</a>
+                    </li>
+                    <li class="nav-item" id="nav-welcome">
+                        <span class="nav-link">Xin chào, <span id="username"></span>!</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Content of the page -->
+    <div class="container info-detail">
+        <div class="account-section">
+            <div class="left">
+                <img id="img" src="" alt="Profile picture">
+                <ul>
+                    <li><a href="./detailinfo.html" class="yellow-text">THÔNG TIN CÁ NHÂN</a></li>
+                    <li><a href="./changepass.html">ĐỔI MẬT KHẨU</a></li>
+                    <li><a href="./payment.html">NẠP TÀI KHOẢN</a></li>
+                    <li><a href="./listbill.html">LỊCH SỬ GIAO DỊCH</a></li>
+                    <li><a href="./admin.html" id="nav-admin">TRANG ADMIN</a></li>
+                </ul>
+            </div>
+            <div class="right">
+                <h1>Xin chào <span id="fullname"></span> !</h1>
+                <div class="user-info">
+                    <p><strong>Địa chỉ:</strong> <span class="address"></span></p>
+                    <p><strong>Số điện thoại:</strong> <span class="phone"></span></p>
+                    <p><strong>Ngày sinh:</strong> <span class="birthday"></span></p>
+                    <p><strong>Email:</strong> <span class="email"></span></p>
+                    <p><strong>Tài khoản:</strong> <span class="number"></span></p>
+                </div>
+                <div class="buttons">
+                    <button id="btn-thong-tin">Thông tin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Column 1: About -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Về Chúng Tôi</h5>
+                    <p class="footer-text">Cinemas with state-of-the-art technology. Experience the best movie watching
+                        experience in Vietnam!</p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Liên Kết Nhanh</h5>
+                    <ul class="footer-links">
+                        <li><a href="home.html">Trang Chủ</a></li>
+                        <li><a href="./about.html">Về Chúng Tôi</a></li>
+                        <li><a href="./contact.html">Liên Hệ</a></li>
+                        <li><a href="./terms.html">Điều Khoản</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Follow Us -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Kết Nối</h5>
+                    <div class="social-icons">
+                        <a href="#" class="fab fa-facebook-square" target="_blank"></a>
+                        <a href="#" class="fab fa-twitter-square" target="_blank"></a>
+                        <a href="#" class="fab fa-instagram-square" target="_blank"></a>
+                        <a href="#" class="fab fa-youtube-square" target="_blank"></a>
+                    </div>
+                </div>
+
+                <!-- Column 4: Contact -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Liên Hệ</h5>
+                    <p class="footer-text">Địa chỉ: 123 Cinema St, Hà Nội, Việt Nam</p>
+                    <p class="footer-text">Điện thoại: (+84) 123 456 789</p>
+                    <p class="footer-text">Email: support@cinemas.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container text-center mt-4">
+            <p class="footer-text">© 2025 CGV Cinemas. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jwt-decode/3.1.2/jwt-decode.min.js"></script>
+
+    <script src="./detailinfo.js"></script>
+</body>
+</html>
