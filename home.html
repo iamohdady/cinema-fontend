@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tunz Cinemas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        .navbar {
+            background-color: #660000;
+            color: white;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand:hover {
+            color: #ffcc00;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .navbar a {
+            color: white;
+        }
+
+        .movie-title {
+            color: #ffcc00;
+        }
+
+        .footer a {
+            color: #ff3333;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 30px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+
+        .movie-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .movie-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            opacity: 1;
+        }
+
+        .movie-card:hover .movie-info {
+            opacity: 1;
+        }
+
+        .movie-info h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .movie-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .movie-info a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            border: 2px solid white;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .movie-info a:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .movie-info .other-button {
+            float: right;
+            margin-left: 50px;
+        }
+
+        .input-group-append .btn:hover,
+        .input-group-append .btn:focus {
+            background-color: #660000;
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .input-group {
+            margin-left: 144px;
+        }
+
+        .col-md-12 h2 {
+            margin-bottom: 40px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            color: white;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+        .pagination a.active {
+            background-color: #660000;
+            color: white;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .pagination .pages-container {
+            display: flex;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer {
+            margin-top: 3%;
+            padding: 50px 0;
+        }
+
+        .footer ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .footer ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer ul li a:hover {
+            color: #ff3333;
+        }
+
+        .footer .fab {
+            font-size: 24px;
+            color: white;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer .fab:hover {
+            color: #ff3333;
+        }
+
+        .footer p {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">TUZZCNM</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="home.html">WEB</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./nav.html">TIN TỨC & SỰ KIỆN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./about.html">CINEMAS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./detailinfo.html">MEMBER</a>
+                    </li>
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link" href="login.html">ĐĂNG NHẬP</a>
+                    </li>
+                    <li class="nav-item" id="nav-register">
+                        <a class="nav-link" href="register.html">ĐĂNG KÝ</a>
+                    </li>
+                    <li class="nav-item" id="nav-logout">
+                        <a class="nav-link" href="login.html">ĐĂNG XUẤT</a>
+                    </li>
+                    <li class="nav-item" id="nav-welcome">
+                        <span class="nav-link">Xin chào, <span id="username"></span>!</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Tạo một thanh điều hướng phụ với các đường dẫn về phim -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarNav2">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="test.html">Trang Chủ</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="home.html">Phim Đang Chiếu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="comming.html">Phim Sắp Chiếu</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto"> <!-- Di chuyển thanh tìm kiếm lên và thêm lớp ml-auto vào đây -->
+                    <li class="nav-item">
+                        <form id="search-form" class="form-inline">
+                            <div class="input-group">
+                                <input id="search-input" class="form-control mr-sm-2" type="search"
+                                    placeholder="Tìm kiếm" aria-label="Tìm kiếm">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Tạo một phần nội dung chính với các ảnh phim và thông tin -->
+    <div id="container" class="container">
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h2>Phim Đang Chiếu</h2>
+                <!-- Tạo một lưới với 12 ảnh phim -->
+                <div class="grid">
+                    <!-- Tạo một-->
+                    <!-- <div class="movie-card">
+                        <img src="./image cinema/antmanandthewash.jpg" alt="Image" class="movie-image">
+                        <div class="movie-info">
+                            <h3>Gặp Là Chết</h3>
+                            <p>Thể loại: Tâm lý, Hài hước</p>
+                            <p>Thời lượng: 113 phút</p>
+                            <p>Khởi chiếu: 10-12-2025</p>
+                            <a href="list.html?movie_id=1">MUA VÉ</a>
+                            <a href="detail.html?movie_id=1" class="other-button">CHI TIẾT</a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">&raquo;</a>
+    </div>
+
+    <footer class="footer bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-4">Liên Kết Nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Trang Chủ</a></li>
+                        <li><a href="#">Phim Đang Chiếu</a></li>
+                        <li><a href="#">Phim Sắp Chiếu</a></li>
+                        <li><a href="#">Tìm Rạp & Phim</a></li>
+                        <li><a href="#">Khuyến Mãi & Sự Kiện</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-4">Theo Dõi Chúng Tôi</h5>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-youtube"></i></a></li>
+                    </ul>
+                    <p class="mt-3">© 2024 Tunz Cinemas. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Thêm các thư viện JavaScript cần thiết cho Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
